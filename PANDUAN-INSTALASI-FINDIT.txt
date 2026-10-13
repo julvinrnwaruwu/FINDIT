@@ -1,0 +1,46 @@
+FINDIT - PANDUAN MENJALANKAN DAN HOSTING
+
+PENTING
+- Jangan jalankan php artisan migrate:fresh karena akan menghapus seluruh tabel/data.
+- File .env lokal sengaja tidak disertakan demi keamanan. Buat .env dari .env.example.
+- Jangan mengunggah .env ke GitHub atau membagikannya secara publik.
+- Akun pengguna dan laporan disimpan di MySQL.
+
+MENJALANKAN DI XAMPP (LOKAL)
+1. Ekstrak folder findit ke lokasi proyek, misalnya C:\Users\hp\Documents\findit.
+2. Buka folder tersebut di VS Code.
+3. Pastikan Apache dan MySQL aktif di XAMPP; buat database bernama findit dengan collation utf8mb4_unicode_ci.
+4. Salin .env.example menjadi .env.
+5. Atur APP_ENV=local, APP_DEBUG=true, APP_URL=http://127.0.0.1:8000 pada .env lokal.
+6. Pastikan DB_CONNECTION=mysql, DB_HOST=127.0.0.1, DB_PORT=3306, DB_DATABASE=findit, DB_USERNAME=root, DB_PASSWORD= (sesuaikan jika MySQL memakai password).
+7. Jalankan di terminal proyek:
+   php artisan key:generate
+   php artisan optimize:clear
+   php artisan migrate
+   php artisan serve
+8. Buka http://127.0.0.1:8000. Setelah mengubah file Blade, tekan Ctrl+F5 jika browser masih menampilkan halaman lama.
+
+FITUR
+- Registrasi, login, logout.
+- Form laporan barang hilang/temuan, hanya untuk pengguna yang login.
+- Laporan disimpan di tabel item_reports dan ditampilkan di beranda.
+- Pencarian laporan di beranda berdasarkan teks laporan.
+- Nomor WhatsApp barang temuan hanya ditampilkan setelah pelapor menyetujui.
+- Klaim barang dengan persetujuan/penolakan penemu dan konfirmasi pengembalian.
+- Migrasi tambahan dibuat tanpa menghapus tabel atau laporan lama.
+- Password diproses dengan hashing Laravel.
+
+HOSTING
+- Hosting harus mendukung PHP yang sesuai dengan versi Laravel pada composer.json (PHP ^8.3), Composer, dan MySQL.
+- Buat database MySQL dan user khusus hosting, lalu atur .env di server (APP_ENV=production, APP_DEBUG=false, APP_URL=https://domain-anda).
+- Jangan gunakan DB_USERNAME=root di hosting; gunakan user database yang dibuat oleh panel hosting.
+- Jalankan composer install --no-dev --optimize-autoloader jika vendor tidak disertakan atau perlu disiapkan ulang.
+- Jalankan php artisan key:generate hanya untuk instalasi baru dan simpan APP_KEY yang sama sesudahnya.
+- Jalankan php artisan migrate --force.
+- Arahkan document root domain ke folder public Laravel, bukan root proyek.
+- Pastikan storage dan bootstrap/cache dapat ditulis oleh PHP.
+- Jalankan php artisan optimize:clear setelah konfigurasi diubah.
+- Database lokal tidak disertakan dalam ZIP. Ekspor database lokal melalui phpMyAdmin jika ingin membawa akun/laporan percobaan ke server.
+
+CATATAN
+ZIP ini membawa kode proyek; hosting tidak otomatis aktif hanya dengan mengunggah ZIP. Konfigurasi server dan database tetap diperlukan.

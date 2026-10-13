@@ -1,0 +1,23 @@
+PANDUAN FITUR FINDIT TERBARU
+
+ZIP ini menambahkan:
+- Kontak WhatsApp untuk laporan barang ditemukan. Nomor ditampilkan hanya jika persetujuan dicatat.
+- Pengajuan klaim dengan penjelasan dari orang yang mengaku pemilik.
+- Penemu dapat menyetujui atau menolak klaim.
+- Setelah klaim disetujui, penemu dapat mengonfirmasi barang sudah dikembalikan.
+
+PENTING UNTUK DATABASE YANG SUDAH ADA
+1. Jangan menjalankan `php artisan migrate:fresh`.
+2. Buat salinan/backup database MySQL findit terlebih dahulu jika memungkinkan.
+3. Salin folder kode ini ke lokasi proyekmu (atau pakai folder baru untuk tes).
+4. Pertahankan .env milikmu; ZIP ini sengaja tidak menyertakan .env.
+5. Dari terminal pada folder proyek, jalankan:
+   php artisan optimize:clear
+   php artisan migrate
+   php artisan route:list
+   php artisan serve
+6. Buka halaman dan uji akun di dua sesi/browser: akun penemu dan akun pengklaim.
+
+Migrasi kontak memeriksa keberadaan kolom terlebih dahulu, agar kolom whatsapp yang sudah ditambahkan sebelumnya tidak dibuat dua kali. Migrasi klaim hanya menambahkan tabel item_claims. Migrasi ini tidak menghapus laporan lama.
+
+Catatan: fungsi klaim adalah alur konfirmasi di dalam aplikasi, bukan verifikasi identitas otomatis. Penemu harus memeriksa bukti kepemilikan secara langsung sebelum menyerahkan barang.
